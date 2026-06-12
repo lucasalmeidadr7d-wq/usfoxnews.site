@@ -6,7 +6,8 @@ function getCookie(name) {
     }
 }
 
-var campaignID = "6a062bc465debd9009231560";
+// Adaptado com o SEU campaignID
+var campaignID = "6a2c830b31d1d727c715fbc5";
 var cachebuster = Math.round(new Date().getTime() / 1000);
 var rtkClickID;
 var rtkfbp = getCookie('_fbp') || '';
@@ -17,32 +18,14 @@ var pixelParams = "&" + locSearch.substr(1) + "&sub19=" + rtkfbp + "&sub20=" + r
 if (campaignID == "") {
     campaignID = urlParams.get('rtkcmpid')
 }
-var initialSrc = "https://fg.mempezrt.online/" + campaignID + "?format=json";
+// Adaptado com o SEU domínio
+var initialSrc = "https://go.usfoxnews.online/" + campaignID + "?format=json";
 
 function stripTrailingSlash(str) {
     return str.replace(/\/$/, "");
 }
 
 var rawData;
-
-function fixHrefWithClick(
-    _rawData,
-    _cachebuster,
-    _rtkClickID
-) {
-    document.querySelectorAll('a').forEach(function (el) {
-        if (el.href.indexOf("fg.mempezrt.online/click") > -1) {
-            if (el.href.indexOf('?') > -1) {
-                el.href = stripTrailingSlash(el.href) + "&clickid=" + (_rtkClickID || _rawData.clickid) + "&rtkck=" + _cachebuster
-            } else {
-                el.href = stripTrailingSlash(el.href) + "?clickid=" + (_rtkClickID || _rawData.clickid) + "&rtkck=" + _cachebuster
-            }
-        }
-        if (el.href.indexOf("clickid={clickid}") > -1) {
-            el.href = el.href.replace(/{clickid}/, _rawData.clickid) + "&rtkck=" + _cachebuster;
-        }
-    });
-}
 
 setTimeout(function () {
     if (!urlParams.get('rtkcid')) {
@@ -52,9 +35,9 @@ setTimeout(function () {
                 rawData = JSON.parse(xhr.responseText);
                 rtkClickID = rawData.clickid
                 setCookie();
-                // fixHrefWithClick(rawData, cachebuster)
                 document.querySelectorAll('a').forEach(function (el) {
-                    if (el.href.indexOf("fg.mempezrt.online/click") > -1) {
+                    // Adaptado para monitorar o SEU domínio nos links
+                    if (el.href.indexOf("go.usfoxnews.online/click") > -1) {
                         if (el.href.indexOf('?') > -1) {
                             el.href = stripTrailingSlash(el.href) + "&clickid=" + rawData.clickid + "&rtkck=" + cachebuster
                         } else {
@@ -66,7 +49,8 @@ setTimeout(function () {
                     }
                 });
                 xhrr = new XMLHttpRequest;
-                xhrr.open("GET", "https://fg.mempezrt.online/view?clickid=" + rawData.clickid)
+                // Adaptado com o SEU domínio
+                xhrr.open("GET", "https://go.usfoxnews.online/view?clickid=" + rawData.clickid)
                 xhrr.send();
             }
         }
@@ -76,11 +60,12 @@ setTimeout(function () {
         rtkClickID = urlParams.get('rtkcid')
         setCookie();
         xhrTrack = new XMLHttpRequest;
-        xhrTrack.open("GET", "https://fg.mempezrt.online/view?clickid=" + rtkClickID)
+        // Adaptado com o SEU domínio
+        xhrTrack.open("GET", "https://go.usfoxnews.online/view?clickid=" + rtkClickID)
         xhrTrack.send();
-        // fixHrefWithClick(rawData, cachebuster, rtkClickID)
         document.querySelectorAll('a').forEach(function (el) {
-            if (el.href.indexOf("fg.mempezrt.online/click") > -1) {
+            // Adaptado para monitorar o SEU domínio nos links
+            if (el.href.indexOf("go.usfoxnews.online/click") > -1) {
                 if (el.href.indexOf('?') > -1) {
                     el.href = stripTrailingSlash(el.href) + "&clickid=" + rtkClickID + "&rtkck=" + cachebuster
                 } else {
@@ -88,7 +73,8 @@ setTimeout(function () {
                 }
             }
             if (el.href.indexOf("clickid={clickid}") > -1) {
-                el.href = el.href.replace(/{clickid}/, rawData.clickid) + "&rtkck=" + cachebuster;
+                // Mantida a correção para usar rtkClickID e não quebrar quando a URL trouxer rtkcid
+                el.href = el.href.replace(/{clickid}/, rtkClickID) + "&rtkck=" + cachebuster;
             }
         });
     }
