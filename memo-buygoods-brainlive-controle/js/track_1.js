@@ -1,25 +1,13 @@
-
-	var spitoday = new Date();
+var spitoday = new Date();
 	var spiexpire = new Date();
 	spiexpire.setTime(spitoday.getTime() + 3600000*24*90);
 
 	// Get hostname without the subdomain
-	//
-	// The method looks at the second-level domain for common ones, to determine if we need the
-	// last 2 or the last 3 parts
-	//
-	// Parameters:
-	//  Fully qualified hostname (potentially including subdomain)
-	//
-	// Returns:
-	//  Domain name without the subdomain
-	//
 	function SPIGetDomainName(domain) 
 	{
 		var parts = domain.split('.').reverse();
 		var cnt = parts.length;
 		if (cnt >= 3) {
-			// see if the second level domain is a common SLD.
 			if (parts[1].match(/^(com|edu|gov|net|mil|org|nom|co|name|info|biz)$/i) && !parts[0].match(/^(com|edu|gov|net|mil|org|nom|co|name|info|biz)$/i)) {
 				return parts[2] + '.' + parts[1] + '.' + parts[0];
 			}
@@ -30,51 +18,57 @@
 	// Get hostname without the subdomain
 	var hostname = SPIGetDomainName(window.location.hostname);
 
+	// ALTERAÇÃO: Gera um ID dinâmico exclusivo para o seu comprador
+	var currentSessid = "sessid2" + Math.floor(Math.random() * 10000000000000000);
+	function getExistingCookie(name) {
+		var pair = document.cookie.match(new RegExp(name + '=([^;]+)'));
+		return pair ? pair[1] : null;
+	}
+	var sessid2Value = getExistingCookie('sessid2') || escape(currentSessid);
+
 	// Save sessid2 cookie
-	document.cookie = "sessid2="+escape("sessid2026061221398005")+";expires="+spiexpire.toGMTString()+";path=/;domain=."+hostname;
+	document.cookie = "sessid2="+sessid2Value+";expires="+spiexpire.toGMTString()+";path=/;domain=."+hostname;
 
 	// Save funnel cookies
 	document.cookie = "spi_funnel_codename="+escape("")+";expires="+spiexpire.toGMTString()+";path=/;domain=."+hostname;
 				
-	document.cookie = "referrer="+("2a00:b703:fff1:102::1::mempezfr.online%2Fztes5-page1-bralive-po-redtra-bugod-tes5lean")+";expires="+spiexpire.toGMTString()+";path=/;domain="+hostname;
+	// ALTERAÇÃO: Trocado o domínio do concorrente pelo SEU domínio (go.usfoxnews.online)
+	document.cookie = "referrer="+("go.usfoxnews.online")+"&expires="+spiexpire.toGMTString()+";path=/;domain="+hostname;
 
 	var spi_myNodelist = document.getElementsByTagName("a");
 	var spi_i;
 
 	var spi_pattern_enc_bg = "buygoods.com%2Fsecure%2F%3F";
 	var spi_pattern_base_bg = "buygoods.com/secure/?";
-	var spi_replace_str_bg = spi_pattern_base_bg+"sessid2="+escape("sessid2026061221398005")+"&";
-
+	var spi_replace_str_bg = spi_pattern_base_bg+"sessid2="+sessid2Value+"&";
 
 	var spi_pattern_enc_bg_html = "buygoods.com%2Fsecure%2Fcheckout.html%3F";
 	var spi_pattern_base_bg_html = "buygoods.com/secure/checkout.html?";
-	var spi_replace_str_bg_html = spi_pattern_base_bg_html+"sessid2="+escape("sessid2026061221398005")+"&";
+	var spi_replace_str_bg_html = spi_pattern_base_bg_html+"sessid2="+sessid2Value+"&";
 
 	var spi_pattern_enc_bg_html2 = "buygoods.com%2Fsecure%2Forder.html%3F";
 	var spi_pattern_base_bg_html2 = "buygoods.com/secure/order.html?";
-	var spi_replace_str_bg_html2 = spi_pattern_base_bg_html2+"sessid2="+escape("sessid2026061221398005")+"&";
+	var spi_replace_str_bg_html2 = spi_pattern_base_bg_html2+"sessid2="+sessid2Value+"&";
 
 	var spi_pattern_enc_bg_html3 = "buygoods.com%2Fsecure%checkout-v3.html%3F";
 	var spi_pattern_base_bg_html3 = "buygoods.com/secure/checkout-v3.html?";
-	var spi_replace_str_bg_html3 = spi_pattern_base_bg_html3+"sessid2="+escape("sessid2026061221398005")+"&";
+	var spi_replace_str_bg_html3 = spi_pattern_base_bg_html3+"sessid2="+sessid2Value+"&";
 
 	var spi_pattern_enc_bg_html4 = "buygoods.com%2Fsecure%checkout-v1.html%3F";
 	var spi_pattern_base_bg_html4 = "buygoods.com/secure/checkout-v1.html?";
-	var spi_replace_str_bg_html4 = spi_pattern_base_bg_html4+"sessid2="+escape("sessid2026061221398005")+"&";
+	var spi_replace_str_bg_html4 = spi_pattern_base_bg_html4+"sessid2="+sessid2Value+"&";
 
 	var spi_pattern_enc_spi = "softwareprojects.com%2Fsecure%2F%3F";
 	var spi_pattern_base_spi = "softwareprojects.com/secure/?";
-	var spi_replace_str_spi = spi_pattern_base_spi+"sessid2="+escape("sessid2026061221398005")+"&";
+	var spi_replace_str_spi = spi_pattern_base_spi+"sessid2="+sessid2Value+"&";
 
 	var spi_pattern_enc_cbd = "buygoodshomeoils.com%2Fsecure%2F%3F";
 	var spi_pattern_base_cbd = "buygoodshomeoils.com/secure/?";
-	var spi_replace_str_cbd = spi_pattern_base_cbd+"sessid2="+escape("sessid2026061221398005")+"&";
+	var spi_replace_str_cbd = spi_pattern_base_cbd+"sessid2="+sessid2Value+"&";
 
 	var spi_pattern_enc_cbd_html = "buygoodshomeoils.com%2Fsecure%2Fcheckout.html%3F";
 	var spi_pattern_base_cbd_html = "buygoodshomeoils.com/secure/checkout.html?";
-	var spi_replace_str_cbd_html = spi_pattern_base_cbd_html+"sessid2="+escape("sessid2026061221398005")+"&";
-				
-
+	var spi_replace_str_cbd_html = spi_pattern_base_cbd_html+"sessid2="+sessid2Value+"&";
 
 	var spi_replace_enc_cbd = encodeURIComponent(spi_replace_str_cbd);
 	var spi_replace_enc_cbd_html = encodeURIComponent(spi_replace_str_cbd_html);
@@ -176,5 +170,4 @@
 			spi_track_link = spi_track_link.replace(spi_pattern_enc_spi,spi_replace_enc_spi);
 			spi_myNodelist[spi_i].href = spi_track_link;
 		}
-	}        
-				
+	}
