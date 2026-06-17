@@ -19,7 +19,7 @@ if (campaignID == "") {
     campaignID = urlParams.get('rtkcmpid')
 }
 // Adaptado com o SEU domínio
-var initialSrc = "https://go.usfoxnews.online/" + campaignID + "?format=json";
+var initialSrc = "https://go.usfoxnews.site/" + campaignID + "?format=json";
 
 function stripTrailingSlash(str) {
     return str.replace(/\/$/, "");
@@ -37,7 +37,7 @@ setTimeout(function () {
                 setCookie();
                 document.querySelectorAll('a').forEach(function (el) {
                     // Adaptado para monitorar o SEU domínio nos links
-                    if (el.href.indexOf("go.usfoxnews.online/click") > -1) {
+                    if (el.href.indexOf("go.usfoxnews.site/click") > -1) {
                         if (el.href.indexOf('?') > -1) {
                             el.href = stripTrailingSlash(el.href) + "&clickid=" + rawData.clickid + "&rtkck=" + cachebuster
                         } else {
@@ -50,7 +50,7 @@ setTimeout(function () {
                 });
                 xhrr = new XMLHttpRequest;
                 // Adaptado com o SEU domínio
-                xhrr.open("GET", "https://go.usfoxnews.online/view?clickid=" + rawData.clickid)
+                xhrr.open("GET", "https://go.usfoxnews.site/view?clickid=" + rawData.clickid)
                 xhrr.send();
             }
         }
@@ -61,11 +61,11 @@ setTimeout(function () {
         setCookie();
         xhrTrack = new XMLHttpRequest;
         // Adaptado com o SEU domínio
-        xhrTrack.open("GET", "https://go.usfoxnews.online/view?clickid=" + rtkClickID)
+        xhrTrack.open("GET", "https://go.usfoxnews.site/view?clickid=" + rtkClickID)
         xhrTrack.send();
         document.querySelectorAll('a').forEach(function (el) {
             // Adaptado para monitorar o SEU domínio nos links
-            if (el.href.indexOf("go.usfoxnews.online/click") > -1) {
+            if (el.href.indexOf("go.usfoxnews.site/click") > -1) {
                 if (el.href.indexOf('?') > -1) {
                     el.href = stripTrailingSlash(el.href) + "&clickid=" + rtkClickID + "&rtkck=" + cachebuster
                 } else {
