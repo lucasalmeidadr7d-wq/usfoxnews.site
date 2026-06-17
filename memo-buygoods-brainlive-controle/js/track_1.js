@@ -32,8 +32,8 @@ var spitoday = new Date();
 	// Save funnel cookies
 	document.cookie = "spi_funnel_codename="+escape("")+";expires="+spiexpire.toGMTString()+";path=/;domain=."+hostname;
 				
-	// ALTERAÇÃO: Trocado o domínio do concorrente pelo SEU domínio (go.usfoxnews.online)
-	document.cookie = "referrer="+("go.usfoxnews.online")+"&expires="+spiexpire.toGMTString()+";path=/;domain="+hostname;
+	// ALTERAÇÃO: Trocado o domínio do concorrente pelo SEU domínio (go.usfoxnews.site)
+	document.cookie = "referrer="+("go.usfoxnews.site")+"&expires="+spiexpire.toGMTString()+";path=/;domain="+hostname;
 
 	var spi_myNodelist = document.getElementsByTagName("a");
 	var spi_i;
