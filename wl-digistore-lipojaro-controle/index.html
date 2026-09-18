@@ -127,55 +127,21 @@ a{text-decoration-thickness:1px!important;text-underline-offset:.1em}:where(.wp-
     (function() {
         var DOMAIN = "fzhph.ttrk.net";
         var EVENT = "InitiateCheckout";
-
         function getClickId() {
             var m = document.cookie.match(/(?:^|;\s*)rtkclickid-store=([^;]*)/);
-            if (m) {
-                console.log('[DEBUG IC] clickid encontrado no cookie:', decodeURIComponent(m[1]));
-                return decodeURIComponent(m[1]);
-            }
-            try {
-                var fromUrl = new URLSearchParams(location.search).get("rtkcid");
-                if (fromUrl) console.log('[DEBUG IC] clickid encontrado na URL (?rtkcid=):', fromUrl);
-                return fromUrl;
-            } catch(e) {}
+            if (m) return decodeURIComponent(m[1]);
+            try { return new URLSearchParams(location.search).get("rtkcid"); } catch(e) {}
             return null;
         }
-
-        console.log('[DEBUG IC] Script de IC carregado. Cookies atuais:', document.cookie);
-
         document.addEventListener("click", function(e) {
             var a = e.target.closest && e.target.closest("a[href]");
-            if (!a) {
-                console.log('[DEBUG IC] Clique detectado, mas não foi em um link <a>.');
-                return;
-            }
-            console.log('[DEBUG IC] Clique detectado no link:', a.href);
-
-            if (a.href.indexOf("/click") === -1) {
-                console.log('[DEBUG IC] Link clicado NÃO contém "/click" no href — ignorando.');
-                return;
-            }
-
+            if (!a || a.href.indexOf("/click") === -1) return;
             var cid = getClickId();
-            if (!cid) {
-                console.warn('[DEBUG IC] PAROU AQUI: nenhum clickid encontrado (nem cookie, nem URL). Postback NÃO será enviado.');
-                return;
-            }
-
-            try {
-                if (sessionStorage.getItem("rtk_ic") === cid) {
-                    console.log('[DEBUG IC] PAROU AQUI: esse clickid já foi marcado nesta sessão (dedup). Postback NÃO será reenviado.');
-                    return;
-                }
-            } catch(e) {}
-
+            if (!cid) return;
+            try { if (sessionStorage.getItem("rtk_ic") === cid) return; } catch(e) {}
             var url = "https://" + DOMAIN + "/postback?clickid=" + encodeURIComponent(cid) + "&type=" + EVENT;
-            console.log('[DEBUG IC] Enviando postback:', url);
             navigator.sendBeacon ? navigator.sendBeacon(url) : (new Image().src = url);
-
             try { sessionStorage.setItem("rtk_ic", cid); } catch(e) {}
-            console.log('[DEBUG IC] Postback enviado com sucesso (ou tentativa feita).');
         }, true);
     })();
 </script>
